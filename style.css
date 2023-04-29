@@ -1,0 +1,14 @@
+header {
+    text-align: center;
+    color:goldenrod;
+}
+
+body {
+    border-style: dotted;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    margin: 10%;
+    padding: 0%;
+    background-color: black;
+    
+}
