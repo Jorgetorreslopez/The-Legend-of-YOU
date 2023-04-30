@@ -1,14 +1,32 @@
-header {
-    text-align: center;
-    color:goldenrod;
-}
 
-body {
-    border-style: dotted;
+#playWindow {
+    width: 850px;
+    height: 700px;
+    background-color: black;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  #background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://i.imgur.com/6j2UyWU.jpg");
+    background-repeat:space;
+    filter: blur(3px);
+    background-size: cover;
+    z-index: -1;
+  }  
+  
+
+body > header > h1 {
+    border: 10px double goldenrod;
+    margin: 20px auto 60px auto;
+    padding: 20px 20px 20px 20px;
     font-family: 'Press Start 2P', cursive;
     text-align: center;
-    margin: 10%;
-    padding: 0%;
-    background-color: black;
-    
+    color:goldenrod;
+    font-size: 5rem;
 }
