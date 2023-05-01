@@ -1,13 +1,4 @@
-
-#playWindow {
-    width: 850px;
-    height: 700px;
-    background-color: black;
-    position: relative;
-    margin: 0 auto;
-  }
-
-  #background {
+ #background {
     position: fixed;
     top: 0;
     left: 0;
@@ -19,6 +10,36 @@
     background-size: cover;
     z-index: -1;
   }  
+  
+#playWindow {
+    width: 850px;
+    height: 700px;
+    background-color: black;
+    position: relative;
+    margin: 0 auto;
+    z-index: 1;
+  }
+
+  #map1 {
+    background-image: url(https://i.imgur.com/kXULxz2.png);
+    background-size: cover;
+    width: 850px;
+    height: 700px;
+    position: relative;
+    margin: 0 auto;
+    z-index: 2;
+  }
+
+.heroSprite {
+    background-image: url(https://i.imgur.com/unqf9A6.png);
+    background-repeat: no-repeat;
+    z-index: 5;
+    position: absolute;
+    top: 400px;
+    right: 300px;
+    width: 100px;
+    height: 100px;
+}
   
 
 body > header > h1 {
