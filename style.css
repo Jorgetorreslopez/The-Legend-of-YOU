@@ -1,3 +1,14 @@
+body > header > h1 {
+    border: 10px double goldenrod;
+    margin: 20px auto 60px auto;
+    padding: 20px 20px 20px 20px;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    color:goldenrod;
+    font-size: 5rem;
+}
+
+ 
  #background {
     position: fixed;
     top: 0;
@@ -5,7 +16,7 @@
     width: 100%;
     height: 100%;
     background-image: url("https://i.imgur.com/6j2UyWU.jpg");
-    background-repeat:space;
+    background-repeat:no-repeat;
     filter: blur(3px);
     background-size: cover;
     z-index: -1;
@@ -18,6 +29,7 @@
     position: relative;
     margin: 0 auto;
     z-index: 1;
+    border: 2px solid white
   }
 
   #map1 {
@@ -30,24 +42,27 @@
     z-index: 2;
   }
 
-.heroSprite {
-    background-image: url(https://i.imgur.com/unqf9A6.png);
-    background-repeat: no-repeat;
-    z-index: 5;
+  .greenRocks {
+    width: 350px;
+    height: 2px;
+    background-color: black;
     position: absolute;
-    top: 400px;
-    right: 300px;
-    width: 100px;
-    height: 100px;
-}
+    top: 380px;
+    left: 200px;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    transform-origin: left center;
+    border-radius: 50%;
+    
+    z-index: 2;
+  }
   
 
-body > header > h1 {
-    border: 10px double goldenrod;
-    margin: 20px auto 60px auto;
-    padding: 20px 20px 20px 20px;
-    font-family: 'Press Start 2P', cursive;
-    text-align: center;
-    color:goldenrod;
-    font-size: 5rem;
+.heroSprite {
+    z-index: 5;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 400px;
+    left: 500px;
 }
+  

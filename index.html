@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="app.js"></script>
+    <script defer src="app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
@@ -20,7 +20,6 @@
         <div id="playerName" class="insertName"></div>
         <div id="playerControlsLegend"></div>
     </div>
-    </div>
     <div id="background"></div>
     <div id="playWindow">
         <div id="screens">
@@ -29,13 +28,18 @@
             <div id="map2"></div>
             <div id="outroScreen"></div>
         </div>
+        <div id="collisionLines" class="walls">
+            <div id="firstScreenWalls" class="greenRocks"></div>
+            <div id="secondScreenWalls" class="redRocks"></div>
+        </div>
         <div id="player" class="heroSprite">
+            <img src="https://i.imgur.com/unqf9A6.png">
             <div id="heroHitbox"></div>
         </div>
         <div id="enemy1"></div>
         <div id="enemy2"></div>
         <div id="npc"></div>
-        <div id="items"></div>
+        <div id="sword"></div>
     </div>
     
 </body>
