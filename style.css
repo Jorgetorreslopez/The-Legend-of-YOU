@@ -29,7 +29,7 @@ body > header > h1 {
     position: relative;
     margin: 0 auto;
     z-index: 1;
-    border: 2px solid white
+    border: 2px solid rgb(115, 189, 210)
   }
 
   #map1 {
@@ -42,17 +42,60 @@ body > header > h1 {
     z-index: 2;
   }
 
-  .greenRocks {
-    width: 350px;
+  .wall1 {
+    width: 320px;
     height: 2px;
-    background-color: black;
+    background-color: blue;
     position: absolute;
-    top: 380px;
-    left: 200px;
+    top: 390px;
+    left: 165px;
     transform: translate(-50%, -50%) rotate(-45deg);
     transform-origin: left center;
     border-radius: 50%;
-    
+    z-index: 2;
+  }
+
+  .wall2 {
+    width: 127px;
+    height: 165px;
+    position: absolute;
+    top: 0px;
+    left: 293px;
+    background-color: red;
+    border-radius: 0 0 0 10px;
+    z-index: 2;
+  }
+  
+  .wall3 {
+    width: 310px;
+    height: 355px;
+    position: absolute;
+    top: 0px;
+    left: 543px;
+    background-color: green;
+    border-radius: 0 0 0 10px;
+    z-index: 2;
+  }
+
+  .wall4 { 
+    width: 850px;
+    height: 97px;
+    position: absolute;
+    top: 604px;
+    left: 0px;
+    background-color: yellow;
+    border-radius: 0 10px 0 0;
+    z-index: 2;
+  }
+  
+  .wall5 { 
+    width: 125px;
+    height: 181px;
+    position: absolute;
+    top: 423px;
+    left: 0px;
+    background-color: white;
+    border-radius: 0 10px 0 0;
     z-index: 2;
   }
   
