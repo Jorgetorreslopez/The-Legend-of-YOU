@@ -1,10 +1,12 @@
 console.log('APP IS CONNECTED')
 /*----- constants -----*/
-let gameDiv = document.getElementById('playWindow')
-let charDiv = document.getElementById('player')
-console.log(charDiv)
+var gameDiv = document.getElementById('playWindow')
+var charDiv = document.getElementById('player')
 
+var charLeftPosition = 500
+var charTopPosition = 400
 
+console.log(gameDiv)
 /*----- state variables -----*/
 
 
@@ -12,33 +14,50 @@ console.log(charDiv)
 
 
 /*----- event listeners -----*/
-
 document.addEventListener('keydown', handleKeys)
-var charLeftAdd = 500
-var charTopAdd = 400
+
 
 /*----- functions -----*/
-
 function handleKeys(e) {
     e.preventDefault()
     let keyPress = e.code;
+    
     if (keyPress === 'ArrowRight') {
-      charLeftAdd += 10;  
-      charDiv.style.left = charLeftAdd + 'px';
+      charLeftPosition += 10;
+      if (charLeftPosition + charDiv.offsetWidth <= gameDiv.offsetWidth) {
+        charDiv.style.left = charLeftPosition + 'px';
+      } else {
+        charLeftPosition = gameDiv.offsetWidth - charDiv.offsetWidth;
+      } 
     }
 
     if (keyPress === 'ArrowLeft') {
-      charLeftAdd -= 10;
-      charDiv.style.left = charLeftAdd + 'px';
+      charLeftPosition -= 10;
+      if (charLeftPosition >= 0){
+        charDiv.style.left = charLeftPosition + 'px';
+      } else {
+        charLeftPosition = 0;
+      }
+      
     }
 
     if (keyPress === 'ArrowDown') {
-      charTopAdd += 10;
-      charDiv.style.top = charTopAdd + 'px';
+      charTopPosition += 10;
+      if (charTopPosition + charDiv.offsetHeight <= gameDiv.offsetHeight) {
+        charDiv.style.top = charTopPosition + 'px';
+      } else {
+        charTopPosition = gameDiv.offsetHeight - charDiv.offsetHeight;
+      }
+      
     }
 
     if (keyPress === 'ArrowUp') {
-      charTopAdd -= 10;
-      charDiv.style.top = charTopAdd + 'px';
+      charTopPosition -= 10;
+      if (charTopPosition >= 0) {
+        charDiv.style.top = charTopPosition + 'px';
+      } else {
+        charTopPosition = 0;
+      }
+      
     }
 }
