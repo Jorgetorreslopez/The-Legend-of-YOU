@@ -1,17 +1,23 @@
 console.log('APP IS CONNECTED')
 /*----- constants -----*/
-var gameDiv = document.getElementById('playWindow')
-var charDiv = document.getElementById('player')
-var wallCollision = document.getElementById('walls')
+const gameDiv = document.getElementById('playWindow')
+const charDiv = document.getElementById('player')
+const wall1Collision = document.getElementById('wall1')
 
-var charLeftPosition = 500
-var charTopPosition = 400
+const charRect = charDiv.getBoundingClientRect();
+const wall1Rect = wall1Collision.getBoundingClientRect(); 
 
-// console.log(wall1)
-// console.log(wall2)
-// console.log(wall3)
-// console.log(wall4)
-// console.log(wall5)
+let charRight = charRect.left + charRect.width;
+let charBottom = charRect.top + charRect.height;
+
+let wall1Right = wall1Rect.left + wall1Rect.width;
+let wall1Bottom = wall1Rect.top + wall1Rect.height;
+
+let charLeftPosition = 500
+let charTopPosition = 400
+
+console.log(wall1Rect)
+console.log(wall1Bottom)
 /*----- state variables -----*/
 
 
@@ -31,7 +37,6 @@ function handleKeys(e) {
       charLeftPosition += 10;
       if (charLeftPosition + charDiv.offsetWidth <= gameDiv.offsetWidth) {
         charDiv.style.left = charLeftPosition + 'px';
-        detectWalls();
       } else {
         charLeftPosition = gameDiv.offsetWidth - charDiv.offsetWidth;
       } 
@@ -41,40 +46,26 @@ function handleKeys(e) {
       charLeftPosition -= 10;
       if (charLeftPosition >= 0){
         charDiv.style.left = charLeftPosition + 'px';
-        detectWalls();
       } else {
         charLeftPosition = 0;
       }
-      
     }
 
     if (keyPress === 'ArrowDown') {
       charTopPosition += 10;
       if (charTopPosition + charDiv.offsetHeight <= gameDiv.offsetHeight) {
         charDiv.style.top = charTopPosition + 'px';
-        detectWalls();
       } else {
         charTopPosition = gameDiv.offsetHeight - charDiv.offsetHeight;
       }
-      
     }
 
     if (keyPress === 'ArrowUp') {
       charTopPosition -= 10;
       if (charTopPosition >= 0) {
         charDiv.style.top = charTopPosition + 'px';
-        detectWalls();
       } else {
         charTopPosition = 0;
       }
-      
     }
-}
-
-function detectWalls () {
-  const charRect = charDiv.getBoundingClientRect();
-  const wallsRect = wallCollision.getBoundingClientRect();
-  if (charRect.right > wallsRect.left && charRect.left < wallsRect.right && charRect.bottom > wallsRect.top && charRect.top < wallsRect.bottom) {
-
-  }
 }
