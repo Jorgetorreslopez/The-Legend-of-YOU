@@ -52,37 +52,41 @@ function handleKeys(e) {
     }
 
     if (keyPress === 'ArrowDown') {
-      charTopPosition += 10;
-      if (charTopPosition + charDiv.offsetHeight <= gameDiv.offsetHeight) {
-        charDiv.style.top = charTopPosition + 'px';
-      } else {
-        charTopPosition = gameDiv.offsetHeight - charDiv.offsetHeight;
+      if (!detectCollision()) {
+        charTopPosition += 10;
+        if (charTopPosition + charDiv.offsetHeight <= gameDiv.offsetHeight) {
+          charDiv.style.top = charTopPosition + 'px';
+        } else {
+          charTopPosition = gameDiv.offsetHeight - charDiv.offsetHeight;
+        }  
       }
+      
     }
 
     if (keyPress === 'ArrowUp') {
       console.log(detectCollision())
-      if (!detectCollision()) {
+      if (!detectCollision(-10, 0)) {
         charTopPosition -= 10;
+      }
       if (charTopPosition >= 0) {
         charDiv.style.top = charTopPosition + 'px';
       } else {
         charTopPosition = 0;
       }
-      };
+    
       
     }
 }
 
-function detectCollision () {
+function detectCollision (top, left) {
   const charRect = charDiv.getBoundingClientRect();
   
   for (let i = 0; i < collisionLineRects.length; i++) {
     const collisionLineRect = collisionLineRects[i];
-    if (charRect.left < collisionLineRect.left + collisionLineRect.width &&
-      charRect.left + charRect.width > collisionLineRect.left &&
-      charRect.top < collisionLineRect.top + collisionLineRect.height &&
-      charRect.height + charRect.top > collisionLineRect.top) {
+    if (charRect.left + left < collisionLineRect.left + collisionLineRect.width &&
+      charRect.left + left + charRect.width > collisionLineRect.left &&
+      charRect.top + top < collisionLineRect.top + collisionLineRect.height &&
+      charRect.height + charRect.top + top > collisionLineRect.top) {
       return true 
    }
   } return false
