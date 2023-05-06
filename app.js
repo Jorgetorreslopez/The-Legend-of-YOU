@@ -33,8 +33,10 @@ function handleKeys(e) {
     let keyPress = e.code;
     
     if (keyPress === 'ArrowRight') {
-      if (!detectCollision(0, 10)){
+      if (!detectCollision()){
       charLeftPosition += 10;
+      } else {
+        charLeftPosition -= 10;
       }
       if (charLeftPosition + charDiv.offsetWidth <= gameDiv.offsetWidth) {
         charDiv.style.left = charLeftPosition + 'px';
@@ -45,8 +47,10 @@ function handleKeys(e) {
     }
 
     if (keyPress === 'ArrowLeft') {
-      if (!detectCollision(0,-10)) {
+      if (!detectCollision()) {
       charLeftPosition -= 10;
+      } else {
+        charLeftPosition += 10;
       }
       if (charLeftPosition >= 0){
         charDiv.style.left = charLeftPosition + 'px';
@@ -56,9 +60,11 @@ function handleKeys(e) {
     }
 
     if (keyPress === 'ArrowDown') {
-      if (!detectCollision(10, 0)) {
+      if (!detectCollision()) {
         charTopPosition += 10;
-      }  
+      } else {
+        charTopPosition -= 10;
+      } 
         if (charTopPosition + charDiv.offsetHeight <= gameDiv.offsetHeight) {
           charDiv.style.top = charTopPosition + 'px';
         } else {
@@ -67,9 +73,10 @@ function handleKeys(e) {
     }
 
     if (keyPress === 'ArrowUp') {
-      console.log(detectCollision())
-      if (detectCollision(-10, 0)) {
+      if (!detectCollision()) {
         charTopPosition -= 10;
+      } else {
+        charTopPosition += 10;
       }
       if (charTopPosition >= 0) {
         charDiv.style.top = charTopPosition + 'px';
@@ -79,15 +86,16 @@ function handleKeys(e) {
     }
 }
 
-function detectCollision (top, left) {
+function detectCollision () {
+  console.log()
   const charRect = charDiv.getBoundingClientRect();
   
   for (let i = 0; i < collisionLineRects.length; i++) {
     const collisionLineRect = collisionLineRects[i];
-    if (charRect.left + left < collisionLineRect.left + collisionLineRect.width &&
-      charRect.left + left + charRect.width > collisionLineRect.left &&
-      charRect.top + top < collisionLineRect.top + collisionLineRect.height &&
-      charRect.height + charRect.top + top > collisionLineRect.top) {
+    if (charRect.left < collisionLineRect.left + collisionLineRect.width &&
+      charRect.left + charRect.width > collisionLineRect.left &&
+      charRect.top < collisionLineRect.top + collisionLineRect.height &&
+      charRect.height + charRect.top > collisionLineRect.top) {
       return true 
    }
   } return false

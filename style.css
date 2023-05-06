@@ -1,3 +1,9 @@
+/* * {
+  margin: 0;
+  padding: 0;
+  border: 0;
+} */
+
 body > header > h1 {
     border: 10px double goldenrod;
     margin: 20px auto 60px auto;
@@ -29,7 +35,7 @@ body > header > h1 {
     position: relative;
     margin: 0 auto;
     z-index: 1;
-    border: 1px solid rgb(115, 189, 210)
+    /* border: 1px solid rgb(115, 189, 210) */
   }
 
   #map1 {
@@ -43,8 +49,8 @@ body > header > h1 {
   }
 
   .walls {
-    margin: 0%;
-    padding: 0%;
+    margin: 0;
+    padding: 0;
     border: 0;
   }
   
@@ -81,6 +87,7 @@ body > header > h1 {
     background-color: green;
     border-radius: 0 0 0 10px;
     z-index: 2;
+    
   }
 
   .wall4 { 
