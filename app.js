@@ -33,7 +33,9 @@ function handleKeys(e) {
     let keyPress = e.code;
     
     if (keyPress === 'ArrowRight') {
+      if (!detectCollision(0, 10)){
       charLeftPosition += 10;
+      }
       if (charLeftPosition + charDiv.offsetWidth <= gameDiv.offsetWidth) {
         charDiv.style.left = charLeftPosition + 'px';
       } else {
@@ -43,7 +45,9 @@ function handleKeys(e) {
     }
 
     if (keyPress === 'ArrowLeft') {
+      if (!detectCollision(0,-10)) {
       charLeftPosition -= 10;
+      }
       if (charLeftPosition >= 0){
         charDiv.style.left = charLeftPosition + 'px';
       } else {
@@ -52,29 +56,26 @@ function handleKeys(e) {
     }
 
     if (keyPress === 'ArrowDown') {
-      if (!detectCollision()) {
+      if (!detectCollision(10, 0)) {
         charTopPosition += 10;
+      }  
         if (charTopPosition + charDiv.offsetHeight <= gameDiv.offsetHeight) {
           charDiv.style.top = charTopPosition + 'px';
         } else {
           charTopPosition = gameDiv.offsetHeight - charDiv.offsetHeight;
         }  
-      }
-      
     }
 
     if (keyPress === 'ArrowUp') {
       console.log(detectCollision())
-      if (!detectCollision(-10, 0)) {
+      if (detectCollision(-10, 0)) {
         charTopPosition -= 10;
       }
       if (charTopPosition >= 0) {
         charDiv.style.top = charTopPosition + 'px';
       } else {
         charTopPosition = 0;
-      }
-    
-      
+      }  
     }
 }
 
