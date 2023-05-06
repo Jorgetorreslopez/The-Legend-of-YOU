@@ -1,8 +1,8 @@
-/* * {
+* {
   margin: 0;
   padding: 0;
   border: 0;
-} */
+}
 
 body > header > h1 {
     border: 10px double goldenrod;
@@ -48,11 +48,6 @@ body > header > h1 {
     z-index: 2;
   }
 
-  .walls {
-    margin: 0;
-    padding: 0;
-    border: 0;
-  }
   
   .wall1 {
     width: 320px;
