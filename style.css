@@ -66,7 +66,7 @@ body > header > h1 > span {
   
  .wall1 {
    width: 220px;
-   height: 2px;
+   height: 4px;
    background-color: blue;
    position: absolute;
    top: 290px;
@@ -119,6 +119,16 @@ body > header > h1 > span {
    left: 0px;
   background-color: white;
    border-radius: 0 10px 0 0;
+  z-index: 2;
+}
+
+.door {
+  position: absolute;
+  width: 144px;
+  height: 5px;
+  background-color: blueviolet;
+  top: 160px;
+  left: 150px;
   z-index: 2;
 }
   

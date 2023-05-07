@@ -3,11 +3,16 @@ console.log("APP IS CONNECTED");
 const gameDiv = document.getElementById("playWindow");
 const charDiv = document.getElementById("player");
 const parentWallCollisionDiv = document.getElementById("collisionLines");
+const door = document.getElementById('nextScreenDoor')
+
 
 const childWallCollisionDivs = parentWallCollisionDiv.querySelectorAll(".wall");
 
 const charRect = charDiv.getBoundingClientRect();
 const collisionLineRects = [];
+const doorRect = door.getBoundingClientRect();
+
+console.log(door)
 
 let charLeftPosition = 500;
 let charTopPosition = 400;
@@ -79,6 +84,7 @@ function handleKeys(e) {
       charTopPosition = 0;
     }
   }
+  detectDoor();
 }
 
 
@@ -117,4 +123,22 @@ function detectCollision(top, left, right, bottom) {
     }
   }
   return false;
+}
+
+function detectDoor() {
+  const charRect = charDiv.getBoundingClientRect();
+  const doorRect = door.getBoundingClientRect();
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  const charTop = charRect.top + scrollTop;
+  const charLeft = charRect.left + scrollLeft;
+  const doorTop = charRect.top + scrollTop;
+  const doorLeft = doorRect.left + scrollLeft;
+
+  const overlapX = charLeft < doorLeft + doorRect.width && charLeft + charDiv.offsetWidth > doorLeft;
+  const overlapY = charTop < doorTop + doorRect.height && charTop + charDiv.offsetHeight > doorTop;
+
+  if (overlapX && overlapY) (
+    window.location.href = "https://www.wcoforever.net/anime/adventure-time"
+  )
 }
