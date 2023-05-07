@@ -12,7 +12,6 @@ const collisionLineRects = [];
 let charLeftPosition = 500;
 let charTopPosition = 400;
 
-//console.log(childWallCollisionDivs)
 /*----- state variables -----*/
 
 childWallCollisionDivs.forEach((div) => {
@@ -24,6 +23,7 @@ childWallCollisionDivs.forEach((div) => {
 
 /*----- event listeners -----*/
 document.addEventListener("keydown", handleKeys);
+window.addEventListener('resize', collisionLineRects)
 
 /*----- functions -----*/
 function handleKeys(e) {
@@ -59,9 +59,6 @@ function handleKeys(e) {
     if (!detectCollision(0, 0, 0, 10 )) {
       charTopPosition += 10;
     } 
-    // else {
-    //   charTopPosition -= 10;
-    // }
 
     if (charTopPosition + charDiv.offsetHeight <= gameDiv.offsetHeight) {
       charDiv.style.top = charTopPosition + "px";
@@ -74,10 +71,7 @@ function handleKeys(e) {
     console.log(detectCollision(-10, 0, 0, 0))
     if (!detectCollision(-10, 0, 0, 0)) {
       charTopPosition -= 10;
-    } 
-    // else {
-    //  charTopPosition = charTopPosition;
-    // }
+    }
 
     if (charTopPosition >= 0) {
       charDiv.style.top = charTopPosition + "px";
@@ -107,14 +101,20 @@ function handleKeys(e) {
 
 function detectCollision(top, left, right, bottom) {
   const charRect = charDiv.getBoundingClientRect();
-  console.log(charRect, collisionLineRects)
-  for (let i = 0; i < collisionLineRects.length - 1; i++) {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  const charTop = charRect.top + scrollTop;
+  const charLeft = charRect.left + scrollLeft;
+
+  for (let i = 0; i < collisionLineRects.length; i++) {
     const collisionLineRect = collisionLineRects[i];
   
-  const overlapX = charRect.left + left < collisionLineRect.right && charRect.right + right > collisionLineRect.left;
-  const overlapY = charRect.top + top < collisionLineRect.bottom && charRect.bottom + bottom > collisionLineRect.top;  
-  if (overlapX && overlapY) {
-    return true
+    const overlapX = charLeft + left < collisionLineRect.right && charLeft + charDiv.offsetWidth + right > collisionLineRect.left;
+    const overlapY = charTop + top < collisionLineRect.bottom && charTop + charDiv.offsetHeight + bottom > collisionLineRect.top;  
+
+    if (overlapX && overlapY) {
+      return true;
+    }
   }
-} return false
+  return false;
 }
