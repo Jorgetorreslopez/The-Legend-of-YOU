@@ -28,7 +28,6 @@ body > header > h1 {
   display: flex;
   justify-content: center;
   transform: rotate(-90deg);
-  /* transform-origin: center center; */
   position: absolute;
   top: 400px;
   left: -200px;
@@ -62,7 +61,6 @@ body > header > h1 > span {
   left: 0;
   z-index: 2;
 }
-
   
  .wall1 {
    width: 220px;
@@ -111,25 +109,38 @@ body > header > h1 > span {
     z-index: 2;
   }
   
- .wall5 { 
-   width: 125px;
-   height: 181px;
-   position: absolute;
-   top: 423px;
-   left: 0px;
-  background-color: white;
-   border-radius: 0 10px 0 0;
-  z-index: 2;
+  .wall5 { 
+    width: 125px;
+    height: 181px;
+    position: absolute;
+    top: 423px;
+    left: 0px;
+    background-color: white;
+    border-radius: 0 10px 0 0;
+    z-index: 2;
+  }
+
+#map2 {
+  background-image: url(https://media.tenor.com/pLowlxwrWxoAAAAM/sunset.gif);
+  background-size: cover;
+  width: 850px;
+  height: 700px;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  z-index: 2; 
 }
 
 .door {
   position: absolute;
   width: 144px;
   height: 5px;
-  background-color: blueviolet;
   top: 160px;
   left: 150px;
   z-index: 2;
+  margin: 0;
+  padding: 0;
 }
   
 
@@ -142,6 +153,26 @@ body > header > h1 > span {
     left: 500px;
 }
 
+#sword {
+  z-index: 4;
+  position: absolute;
+  top: 150px;
+  left: 375px;
+  height: 25px;
+  width: 50px;
+}
+
+.sword-text {
+  font-family: 'Press Start 2P', cursive;
+  text-align: center;
+  font-size: 1rem;
+  color: goldenrod;
+  position: absolute;
+  top: -100px;
+  left: -400px;
+  width: 900px;
+}
+
 img {
   clip-path: polygon(50% 0, 50% 100%, 0 100%, 0 0);
   height: 90px;
@@ -149,5 +180,6 @@ img {
   position: absolute;
   top: -40px;
   left: 0px;
+  z-index: 4;
 }
   

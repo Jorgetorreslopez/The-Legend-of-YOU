@@ -4,6 +4,7 @@ const gameDiv = document.getElementById("playWindow");
 const charDiv = document.getElementById("player");
 const parentWallCollisionDiv = document.getElementById("collisionLines");
 const door = document.getElementById('nextScreenDoor')
+const sword = document.getElementById('sword')
 
 
 const childWallCollisionDivs = parentWallCollisionDiv.querySelectorAll(".wall");
@@ -11,8 +12,9 @@ const childWallCollisionDivs = parentWallCollisionDiv.querySelectorAll(".wall");
 const charRect = charDiv.getBoundingClientRect();
 const collisionLineRects = [];
 const doorRect = door.getBoundingClientRect();
+const swordRect = sword.getBoundingClientRect();
 
-console.log(door)
+//console.log(sword)
 
 let charLeftPosition = 500;
 let charTopPosition = 400;
@@ -36,7 +38,8 @@ function handleKeys(e) {
   let keydown = e.code;
   
   if (keydown === "ArrowRight") {
-    if (!detectCollision(0, 0, 10, 0)) {
+    console.log(detectCollision(0, -10, 0, 0) || grabSword(0, -10, 0, 0))
+    if (!detectCollision(0, 0, 10, 0) || grabSword(0, 0, 10, 0)) {
       charLeftPosition += 10;
     } 
 
@@ -48,7 +51,7 @@ function handleKeys(e) {
   }
 
   if (keydown === "ArrowLeft") {
-    console.log(detectCollision(0, -10, 0, 0))
+    console.log(detectCollision(0, -10, 0, 0) || grabSword(0, -10, 0, 0))
     if (!detectCollision(0, -10, 0, 0)) {
       charLeftPosition -= 10;
     } 
@@ -61,7 +64,8 @@ function handleKeys(e) {
   }
 
   if (keydown === "ArrowDown") {
-    if (!detectCollision(0, 0, 0, 10 )) {
+    console.log(detectCollision(0, -10, 0, 0) || grabSword(0, -10, 0, 0))
+    if (!detectCollision(0, 0, 0, 10 ) || grabSword(0, 0, 0, 10)) {
       charTopPosition += 10;
     } 
 
@@ -73,8 +77,8 @@ function handleKeys(e) {
   }
 
   if (keydown === "ArrowUp") {
-    console.log(detectCollision(-10, 0, 0, 0))
-    if (!detectCollision(-10, 0, 0, 0)) {
+    console.log(detectCollision(0, -10, 0, 0) || grabSword(0, -10, 0, 0) || detectDoor(0, -10, 0, 0))
+    if (!detectCollision(-10, 0, 0, 0) || grabSword(-10, 0, 0, 0) || detectDoor(-10, 0, 0, 0)) {
       charTopPosition -= 10;
     }
 
@@ -84,7 +88,9 @@ function handleKeys(e) {
       charTopPosition = 0;
     }
   }
-  detectDoor();
+  // if (detectCollision(0, 0, 0, 0)) {
+  //   grabSword(0, 0, 0, 0);
+  // }
 }
 
 
@@ -125,7 +131,7 @@ function detectCollision(top, left, right, bottom) {
   return false;
 }
 
-function detectDoor() {
+function detectDoor(top, left, right, bottom) {
   const charRect = charDiv.getBoundingClientRect();
   const doorRect = door.getBoundingClientRect();
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -135,10 +141,35 @@ function detectDoor() {
   const doorTop = charRect.top + scrollTop;
   const doorLeft = doorRect.left + scrollLeft;
 
-  const overlapX = charLeft < doorLeft + doorRect.width && charLeft + charDiv.offsetWidth > doorLeft;
-  const overlapY = charTop < doorTop + doorRect.height && charTop + charDiv.offsetHeight > doorTop;
+  const overlapDoorX = charLeft + left < doorRect.right && charLeft + charDiv.offsetWidth + right > doorRect.left;
+  const overlapDoorY = charTop + top < doorRect.bottom && charTop + charDiv.offsetHeight + bottom > doorRect.top;
+  
+  if (overlapDoorX && overlapDoorY) {
+    if (document.getElementById("map1")) {
+    window.location.href = "/Users/jorgetorreslopez/portfolio-projects/projects/unit-1-project/secondscreen.html"
+    } else {
 
-  if (overlapX && overlapY) (
-    window.location.href = "https://www.wcoforever.net/anime/adventure-time"
-  )
+    }
+  }
+}
+
+function grabSword(top, left, right, bottom) {
+  const charRect = charDiv.getBoundingClientRect();
+  const swordRect = sword.getBoundingClientRect();
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  const charTop = charRect.top + scrollTop;
+  const charLeft = charRect.left + scrollLeft;
+  const swordTop = charRect.top + scrollTop;
+  const swordLeft = swordRect.left + scrollLeft;
+
+  const overlapSwordX = charLeft + left < swordRect.right && charLeft + charDiv.offsetWidth + right > swordRect.left;
+  const overlapSwordY = charTop + top < swordRect.bottom && charTop + charDiv.offsetHeight + bottom > swordRect.top;  
+
+
+  if (overlapSwordX && overlapSwordY) {
+    document.getElementById('sword').style.display = 'none';
+    console.log("REASON")
+    return true
+  }
 }
