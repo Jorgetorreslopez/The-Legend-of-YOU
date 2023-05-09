@@ -5,6 +5,7 @@ const charDiv = document.getElementById("player");
 const parentWallCollisionDiv = document.getElementById("collisionLines");
 const door = document.getElementById('nextScreenDoor')
 const sword = document.getElementById('sword')
+const enemy = document.getElementById('enemy')
 
 
 const childWallCollisionDivs = parentWallCollisionDiv.querySelectorAll(".wall");
@@ -13,24 +14,31 @@ const charRect = charDiv.getBoundingClientRect();
 const collisionLineRects = [];
 const doorRect = door.getBoundingClientRect();
 const swordRect = sword.getBoundingClientRect();
+const enemyRect = enemy.getBoundingClientRect();
 
-//console.log(sword)
+console.log(enemyRect)
+
+
+
+/*----- state variables -----*/
+
+let hasSword = false;
+let isAttacking = false;
+let canAttackAgain = false;
 
 let charLeftPosition = 500;
 let charTopPosition = 400;
 
-/*----- state variables -----*/
+/*----- cached elements  -----*/
 
 childWallCollisionDivs.forEach((div) => {
   const collisionLinesRect = div.getBoundingClientRect();
   collisionLineRects.push(collisionLinesRect);
 });
 
-/*----- cached elements  -----*/
-
 /*----- event listeners -----*/
 document.addEventListener("keydown", handleKeys);
-window.addEventListener('resize', collisionLineRects)
+//window.addEventListener('resize', collisionLineRects)
 
 /*----- functions -----*/
 function handleKeys(e) {
@@ -42,7 +50,6 @@ function handleKeys(e) {
     if (!detectCollision(0, 0, 10, 0) || grabSword(0, 0, 10, 0)) {
       charLeftPosition += 10;
     } 
-
     if (charLeftPosition + charDiv.offsetWidth <= gameDiv.offsetWidth) {
       charDiv.style.left = charLeftPosition + "px";
     } else {
@@ -55,7 +62,6 @@ function handleKeys(e) {
     if (!detectCollision(0, -10, 0, 0)) {
       charLeftPosition -= 10;
     } 
-
     if (charLeftPosition >= 0) {
       charDiv.style.left = charLeftPosition + "px";
     } else {
@@ -68,7 +74,6 @@ function handleKeys(e) {
     if (!detectCollision(0, 0, 0, 10 ) || grabSword(0, 0, 0, 10)) {
       charTopPosition += 10;
     } 
-
     if (charTopPosition + charDiv.offsetHeight <= gameDiv.offsetHeight) {
       charDiv.style.top = charTopPosition + "px";
     } else {
@@ -81,7 +86,6 @@ function handleKeys(e) {
     if (!detectCollision(-10, 0, 0, 0) || grabSword(-10, 0, 0, 0) || detectDoor(-10, 0, 0, 0)) {
       charTopPosition -= 10;
     }
-
     if (charTopPosition >= 0) {
       charDiv.style.top = charTopPosition + "px";
     } else {
@@ -138,7 +142,7 @@ function detectDoor(top, left, right, bottom) {
   const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
   const charTop = charRect.top + scrollTop;
   const charLeft = charRect.left + scrollLeft;
-  const doorTop = charRect.top + scrollTop;
+  const doorTop = doorRect.top + scrollTop;
   const doorLeft = doorRect.left + scrollLeft;
 
   const overlapDoorX = charLeft + left < doorRect.right && charLeft + charDiv.offsetWidth + right > doorRect.left;
@@ -160,7 +164,7 @@ function grabSword(top, left, right, bottom) {
   const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
   const charTop = charRect.top + scrollTop;
   const charLeft = charRect.left + scrollLeft;
-  const swordTop = charRect.top + scrollTop;
+  const swordTop = swordRect.top + scrollTop;
   const swordLeft = swordRect.left + scrollLeft;
 
   const overlapSwordX = charLeft + left < swordRect.right && charLeft + charDiv.offsetWidth + right > swordRect.left;
@@ -169,7 +173,28 @@ function grabSword(top, left, right, bottom) {
 
   if (overlapSwordX && overlapSwordY) {
     document.getElementById('sword').style.display = 'none';
-    console.log("REASON")
+    document.getElementById('enemy').style.display = 'block';
+    const song = new Audio();
+    audio.play()
     return true
   }
+}
+
+function takeDamage(top, left, right, bottom) {
+  const charRect = charDiv.getBoundingClientRect();
+  const enemyRect = enemy.getBoundingClientRect();
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  const charTop = charRect.top + scrollTop;
+  const charLeft = charRect.left + scrollLeft;
+  const enemyTop = enemyRect.top + scrollTop;
+  const enemyLeft = enemyRect.left + scrollLeft;
+
+  const overlapEnemyX = charLeft + left < enemyRect.right && charLeft + charDiv.offsetWidth + right > enemyRect.left;
+  const overlapEnemyY = charTop + top < enemyRect.bottom && charTop + charDiv.offsetHeight + bottom > enemyRect.top;
+  
+  if (overlapEnemyX && overlapEnemyY) {
+    document.getElementById('sword').style.display = 'block';
+  }
+
 }
