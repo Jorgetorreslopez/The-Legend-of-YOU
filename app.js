@@ -16,7 +16,7 @@ const doorRect = door.getBoundingClientRect();
 const swordRect = sword.getBoundingClientRect();
 const enemyRect = enemy.getBoundingClientRect();
 
-console.log(enemyRect)
+//console.log(enemyRect)
 
 
 
@@ -38,7 +38,6 @@ childWallCollisionDivs.forEach((div) => {
 
 /*----- event listeners -----*/
 document.addEventListener("keydown", handleKeys);
-//window.addEventListener('resize', collisionLineRects)
 
 /*----- functions -----*/
 function handleKeys(e) {
@@ -92,9 +91,10 @@ function handleKeys(e) {
       charTopPosition = 0;
     }
   }
-  // if (detectCollision(0, 0, 0, 0)) {
-  //   grabSword(0, 0, 0, 0);
-  // }
+
+  if (keydown === 'Space' && hasSword) {
+    attackAnimation();
+  }
 }
 
 
@@ -172,11 +172,16 @@ function grabSword(top, left, right, bottom) {
 
 
   if (overlapSwordX && overlapSwordY) {
+    hasSword = true;
     document.getElementById('sword').style.display = 'none';
     document.getElementById('enemy').style.display = 'block';
-    const song = new Audio();
-    audio.play()
     return true
+  }
+}
+
+function attackAnimation () {
+  if (document.getElementById('sword').style.display === 'none' && grabSword) {
+    console.log('hiyaa')
   }
 }
 
