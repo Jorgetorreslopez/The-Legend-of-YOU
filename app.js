@@ -16,6 +16,15 @@ const doorRect = door.getBoundingClientRect();
 const swordRect = sword.getBoundingClientRect();
 const enemyRect = enemy.getBoundingClientRect();
 
+const observer = new MutationObserver((mutationsList, observer) => {
+  const enemyPositionChange = mutationsList.some(mutation => mutation.attributeName === 'style');
+  if (enemyPositionChange) {
+    detectCollision();
+  }
+})
+const observerConfig = {attributes: true, attributeFilter: ['style']};
+observer.observe(charDiv, observerConfig)
+
 //console.log(enemyRect)
 
 
@@ -23,8 +32,7 @@ const enemyRect = enemy.getBoundingClientRect();
 /*----- state variables -----*/
 
 let hasSword = false;
-let isAttacking = false;
-let canAttackAgain = false;
+let spaceKeyIsPressed = false;
 
 let charLeftPosition = 500;
 let charTopPosition = 400;
@@ -93,7 +101,13 @@ function handleKeys(e) {
   }
 
   if (keydown === 'Space' && hasSword) {
-    attackAnimation();
+    if (e.type === 'keydown') {
+      spaceKeyIsPressed = true;
+      attackAnimation();
+    } else if (e.type === 'keyup') {
+      spaceKeyIsPressed = false;
+      attackAnimation()
+    }
   }
 }
 
@@ -179,27 +193,19 @@ function grabSword(top, left, right, bottom) {
   }
 }
 
-function attackAnimation () {
-  if (document.getElementById('sword').style.display === 'none' && grabSword) {
-    console.log('hiyaa')
+function dropSword () {
+  if (grabSword) {
+    grabSword = false;
+    document.getElementById('sword').style.display = 'block';
+    document.getElementById('sword').style.left = '350px';
+    document.getElementById('sword').style.top = '350px'
   }
 }
 
-function takeDamage(top, left, right, bottom) {
-  const charRect = charDiv.getBoundingClientRect();
-  const enemyRect = enemy.getBoundingClientRect();
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-  const charTop = charRect.top + scrollTop;
-  const charLeft = charRect.left + scrollLeft;
-  const enemyTop = enemyRect.top + scrollTop;
-  const enemyLeft = enemyRect.left + scrollLeft;
-
-  const overlapEnemyX = charLeft + left < enemyRect.right && charLeft + charDiv.offsetWidth + right > enemyRect.left;
-  const overlapEnemyY = charTop + top < enemyRect.bottom && charTop + charDiv.offsetHeight + bottom > enemyRect.top;
-  
-  if (overlapEnemyX && overlapEnemyY) {
-    document.getElementById('sword').style.display = 'block';
+function attackAnimation () {
+  if (document.getElementById('sword').style.display === 'none' && grabSword) {
+    const attackImage = document.querySelector('.linkPic');
+    attackImage.classList.toggle('.attackPic', spaceKeyIsPressed)
+    console.log('hiyaa')
   }
-
 }

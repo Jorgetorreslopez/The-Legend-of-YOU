@@ -157,7 +157,7 @@ body > header > h1 > span {
   position: absolute;
   top: 75px;
   left: 375px;
-  height: 25px;
+  height: 100px;
   width: 50px;
   margin: 0;
 }
@@ -218,13 +218,16 @@ body > header > h1 > span {
 }
 
 .linkPic {
-  clip-path: polygon(50% 0, 50% 100%, 0 100%, 0 0);
   height: 90px;
   width: 90px;
   position: absolute;
   top: -40px;
   left: 0px;
   z-index: 4;
+}
+
+.attackPic {
+  background-image: url(https://i.imgur.com/zRItFcJ.png);
 }
 
   
