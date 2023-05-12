@@ -22,11 +22,12 @@ const enemyRect = enemy.getBoundingClientRect();
 
 let hasSword = false;
 let spaceKeyIsPressed = false;
+let takeDamage = false
 
 let charLeftPosition = 500;
 let charTopPosition = 400;
 
-let enemyHitpoints = 0;
+let enemyHitpoints = 6;
 
 /*----- cached elements  -----*/
 
@@ -45,8 +46,8 @@ function handleKeys(e) {
   let keydown = e.code;
   
   if (keydown === "ArrowRight") {
-    console.log(detectCollision(0, -10, 0, 0) || grabSword(0, -10, 0, 0))
-    if (!detectCollision(0, 0, 10, 0) || grabSword(0, 0, 10, 0)) {
+    console.log(wallCollision(0, 0, 10, 0) || grabSword(0, 0, 10, 0))
+    if (!wallCollision(0, 0, 10, 0) || grabSword(0, 0, 10, 0)) {
       charLeftPosition += 10;
     } 
     if (charLeftPosition + charDiv.offsetWidth <= gameDiv.offsetWidth) {
@@ -57,8 +58,8 @@ function handleKeys(e) {
   }
 
   if (keydown === "ArrowLeft") {
-    console.log(detectCollision(0, -10, 0, 0) || grabSword(0, -10, 0, 0))
-    if (!detectCollision(0, -10, 0, 0)) {
+    console.log(wallCollision(0, -10, 0, 0) || grabSword(0, -10, 0, 0))
+    if (!wallCollision(0, -10, 0, 0) || grabSword(0, -10, 0, 0)) {
       charLeftPosition -= 10;
     } 
     if (charLeftPosition >= 0) {
@@ -69,8 +70,8 @@ function handleKeys(e) {
   }
 
   if (keydown === "ArrowDown") {
-    console.log(detectCollision(0, -10, 0, 0) || grabSword(0, -10, 0, 0))
-    if (!detectCollision(0, 0, 0, 10 ) || grabSword(0, 0, 0, 10)) {
+    console.log(wallCollision(0, 0, 0, 10) || grabSword(0, 0, 0, 10))
+    if (!wallCollision(0, 0, 0, 10 ) || grabSword(0, 0, 0, 10)) {
       charTopPosition += 10;
     } 
     if (charTopPosition + charDiv.offsetHeight <= gameDiv.offsetHeight) {
@@ -81,8 +82,8 @@ function handleKeys(e) {
   }
 
   if (keydown === "ArrowUp") {
-    console.log(detectCollision(0, -10, 0, 0) || grabSword(0, -10, 0, 0) || detectDoor(0, -10, 0, 0))
-    if (!detectCollision(-10, 0, 0, 0) || grabSword(-10, 0, 0, 0) || detectDoor(-10, 0, 0, 0)) {
+    console.log(wallCollision(-10, 0, 0, 0) || grabSword(-10, 0, 0, 0) || detectDoor(-10, 0, 0, 0))
+    if (!wallCollision(-10, 0, 0, 0) || grabSword(-10, 0, 0, 0) || detectDoor(-10, 0, 0, 0)) {
       charTopPosition -= 10;
     }
     if (charTopPosition >= 0) {
@@ -96,16 +97,20 @@ function handleKeys(e) {
     if (e.type === 'keydown') {
       spaceKeyIsPressed = true;
       attackAnimation();
-      attackEnemy(0, 0, 0, 0);
+      attackEnemy(-3, -3, 3, 3);
     } else if (e.type === 'keyup') {
       spaceKeyIsPressed = false;
       attackAnimation();
+      if (takeDamage && !spaceKeyIsPressed) {
+        dropSword()
+        console.log(takeDamage)
+      }
     }
   }
 }
 
 
-function detectCollision(top, left, right, bottom) {
+function wallCollision(top, left, right, bottom) {
   const charRect = charDiv.getBoundingClientRect();
   const scrollTop = document.documentElement.scrollTop;
   const scrollLeft = document.documentElement.scrollLeft;
@@ -162,6 +167,8 @@ function grabSword(top, left, right, bottom) {
 
 
   if (overlapSwordX && overlapSwordY) {
+    takeDamage = true;
+    if (document.getElementById('map2')) {
     hasSword = true;
     document.getElementById('sword').style.display = 'none';
     document.getElementById('enemy').style.display = 'block';
@@ -169,6 +176,7 @@ function grabSword(top, left, right, bottom) {
     enemyPosition.style.top = "400px"
     enemyPosition.style.left = '400px'
     return true
+    } 
   }
 }
 
@@ -185,10 +193,10 @@ function attackAnimation () {
 }
 
 function attackEnemy(top, left, right, bottom) {
-  const charRect = charDiv.getBoundingClientRect()
-  const enemyRect = enemy.getBoundingClientRect()
-  const scrollTop = document.documentElement.scrollLeft
-  const scrollLeft = document.documentElement.scrollTop
+  const charRect = charDiv.getBoundingClientRect();
+  const enemyRect = enemy.getBoundingClientRect();
+  const scrollTop = document.documentElement.scrollLeft;
+  const scrollLeft = document.documentElement.scrollTop;
   const charTop = charRect.top + scrollTop;
   const charLeft = charRect.left + scrollLeft;
   const enemyTop = enemyRect.top + scrollTop;
@@ -197,30 +205,34 @@ function attackEnemy(top, left, right, bottom) {
   const overlapEnemyX = charLeft + left < enemyRect.right && charLeft + charDiv.offsetWidth + right > enemyRect.left;
   const overlapEnemyY = charTop + top < enemyRect.bottom && charTop + charDiv.offsetHeight + bottom > enemyRect.top;
 
-  if (overlapEnemyX && overlapEnemyY) {
-    console.log('EVIL!!!');
-    enemyHitpoints++;
+  if (overlapEnemyX && overlapEnemyY && hasSword) {
+    if (spaceKeyIsPressed) {
+      alert("Nani!!!");
+      enemyHitpoints--;
 
-    if (enemyHitpoints === 1) {
-      enemy.style.display = 'none';
-      const enemyDefeated = document.createElement('div')
-      enemyDefeated.textContent = 'Yo You Did it!!';
-      enemyDefeated.style.fontFamily = 'Press Start 2P'
-      enemyDefeated.style.color = 'goldenrod'
-      enemyDefeated.style.textAlign = 'center'
-      enemyDefeated.style.position = 'absolute'
-      enemyDefeated.style.top = '50px'
-      enemyDefeated.style.left = '880px'
-      document.body.appendChild(enemyDefeated)
+      if (enemyHitpoints === 0) {
+        enemy.style.display = 'none';
+        const enemyDefeated = document.createElement('div');
+        enemyDefeated.textContent = 'Yo You Did it!!';
+        enemyDefeated.style.fontFamily = 'Press Start 2P';
+        enemyDefeated.style.fontSize = "2rem";
+        enemyDefeated.style.color = 'goldenrod';
+        enemyDefeated.style.textAlign = 'center';
+        enemyDefeated.style.position = 'absolute';
+        enemyDefeated.style.top = '150px';
+        enemyDefeated.style.left = '830px';
+        document.body.appendChild(enemyDefeated);
+      }
     } 
-  } 
+  }
 }
 
 function dropSword() {
-  hasSword = false;
+  const sword = document.getElementById('sword');
   sword.style.display = 'block';
+  hasSword = false;
   enemy.style.display = 'none';
-  enemyHitpoints = 0;
+  enemyHitpoints = 6;
   const enemyDefeated = document.querySelector('.enemy-defeated');
   if (enemyDefeated) {
     enemyDefeated.remove();
