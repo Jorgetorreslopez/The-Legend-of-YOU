@@ -22,12 +22,15 @@ const enemyRect = enemy.getBoundingClientRect();
 
 let hasSword = false;
 let spaceKeyIsPressed = false;
-let takeDamage = false
+let fatalBlow = false
 
 let charLeftPosition = 500;
 let charTopPosition = 400;
 
+let enemyLeftPosition = 50;
+let enemySpeed = 15;
 let enemyHitpoints = 6;
+
 
 /*----- cached elements  -----*/
 
@@ -97,14 +100,10 @@ function handleKeys(e) {
     if (e.type === 'keydown') {
       spaceKeyIsPressed = true;
       attackAnimation();
-      attackEnemy(-3, -3, 3, 3);
+      attackEnemy(-20, -20, 20, 20);
     } else if (e.type === 'keyup') {
       spaceKeyIsPressed = false;
       attackAnimation();
-      if (takeDamage && !spaceKeyIsPressed) {
-        dropSword()
-        console.log(takeDamage)
-      }
     }
   }
 }
@@ -167,7 +166,7 @@ function grabSword(top, left, right, bottom) {
 
 
   if (overlapSwordX && overlapSwordY) {
-    takeDamage = true;
+    fatalBlow = true;
     if (document.getElementById('map2')) {
     hasSword = true;
     document.getElementById('sword').style.display = 'none';
@@ -227,6 +226,37 @@ function attackEnemy(top, left, right, bottom) {
   }
 }
 
+function enemyCollision(top, left, right, bottom) {
+  const charRect = charDiv.getBoundingClientRect();
+  const enemyRect = enemy.getBoundingClientRect();
+  const scrollTop = document.documentElement.scrollLeft;
+  const scrollLeft = document.documentElement.scrollTop;
+  const charTop = charRect.top + scrollTop;
+  const charLeft = charRect.left + scrollLeft;
+  const enemyTop = enemyRect.top + scrollTop;
+  const enemyLeft = enemyRect.left + scrollLeft;
+
+  const overlapEnemyX = charLeft + left < enemyRect.right && charLeft + charDiv.offsetWidth + right > enemyRect.left;
+  const overlapEnemyY = charTop + top < enemyRect.bottom && charTop + charDiv.offsetHeight + bottom > enemyRect.top;
+  return overlapEnemyX && overlapEnemyY && hasSword;
+}
+
+function takingDamage() {
+  const directHit = enemyCollision(0, 0, 0, 0);
+  if (directHit) {
+    dropSword();
+    alert("You died in the first couple of seconds... I've seen worst honestly but look we don't always get it on the first try. As long as you continue to pick up your reason, You can keep trying. When equipped with your reason not even the you that you hide could stop you. This time after picking up your reason press the Space key and time it just right. Remember the longer you wait the more likely you'll fail. ")
+  } else {
+    attackEnemy()
+    enemyMovement();
+    requestAnimationFrame(takingDamage);
+  }
+}
+
+function enemyMovement() {
+  enemy.style.left = enemyLeftPosition + 'px';
+}
+
 function dropSword() {
   const sword = document.getElementById('sword');
   sword.style.display = 'block';
@@ -238,3 +268,6 @@ function dropSword() {
     enemyDefeated.remove();
   }
 }
+
+enemyMovement();
+takingDamage();
