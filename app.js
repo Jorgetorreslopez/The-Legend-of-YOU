@@ -7,7 +7,6 @@ const door = document.getElementById('nextScreenDoor')
 const sword = document.getElementById('sword')
 const enemy = document.getElementById('enemy')
 
-
 const childWallCollisionDivs = parentWallCollisionDiv.querySelectorAll(".wall");
 
 const charRect = charDiv.getBoundingClientRect();
@@ -16,16 +15,6 @@ const doorRect = door.getBoundingClientRect();
 const swordRect = sword.getBoundingClientRect();
 const enemyRect = enemy.getBoundingClientRect();
 
-const observer = new MutationObserver((mutationsList, observer) => {
-  const enemyPositionChange = mutationsList.some(mutation => mutation.attributeName === 'style');
-  if (enemyPositionChange) {
-    detectCollision();
-  }
-})
-const observerConfig = {attributes: true, attributeFilter: ['style']};
-observer.observe(charDiv, observerConfig)
-
-//console.log(enemyRect)
 
 
 
@@ -37,6 +26,8 @@ let spaceKeyIsPressed = false;
 let charLeftPosition = 500;
 let charTopPosition = 400;
 
+let enemyHitpoints = 0;
+
 /*----- cached elements  -----*/
 
 childWallCollisionDivs.forEach((div) => {
@@ -46,6 +37,7 @@ childWallCollisionDivs.forEach((div) => {
 
 /*----- event listeners -----*/
 document.addEventListener("keydown", handleKeys);
+document.addEventListener('keyup', handleKeys)
 
 /*----- functions -----*/
 function handleKeys(e) {
@@ -104,35 +96,19 @@ function handleKeys(e) {
     if (e.type === 'keydown') {
       spaceKeyIsPressed = true;
       attackAnimation();
+      attackEnemy(0, 0, 0, 0);
     } else if (e.type === 'keyup') {
       spaceKeyIsPressed = false;
-      attackAnimation()
+      attackAnimation();
     }
   }
 }
 
 
-// function detectCollision(top, left) {
-//   const charRect = charDiv.getBoundingClientRect();
-//   console.log(charRect, collisionLineRects)
-//   for (let i = 0; i < collisionLineRects.length - 1; i++) {
-//     const collisionLineRect = collisionLineRects[i];
-//     if (
-//       charRect.left + left < collisionLineRect.left + collisionLineRect.width &&
-//       charRect.left + left + charRect.width > collisionLineRect.left &&
-//       charRect.top + top < collisionLineRect.top + collisionLineRect.height &&
-//       charRect.height + charRect.top + top > collisionLineRect.top
-//     ) { 
-//       console.log(collisionLineRect[i])
-//       return true
-//     }
-//   } return false
-// }
-
 function detectCollision(top, left, right, bottom) {
   const charRect = charDiv.getBoundingClientRect();
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollLeft = document.documentElement.scrollLeft;
   const charTop = charRect.top + scrollTop;
   const charLeft = charRect.left + scrollLeft;
 
@@ -152,8 +128,8 @@ function detectCollision(top, left, right, bottom) {
 function detectDoor(top, left, right, bottom) {
   const charRect = charDiv.getBoundingClientRect();
   const doorRect = door.getBoundingClientRect();
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollLeft = document.documentElement.scrollLeft;
   const charTop = charRect.top + scrollTop;
   const charLeft = charRect.left + scrollLeft;
   const doorTop = doorRect.top + scrollTop;
@@ -174,8 +150,8 @@ function detectDoor(top, left, right, bottom) {
 function grabSword(top, left, right, bottom) {
   const charRect = charDiv.getBoundingClientRect();
   const swordRect = sword.getBoundingClientRect();
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollLeft = document.documentElement.scrollLeft;
   const charTop = charRect.top + scrollTop;
   const charLeft = charRect.left + scrollLeft;
   const swordTop = swordRect.top + scrollTop;
@@ -189,23 +165,64 @@ function grabSword(top, left, right, bottom) {
     hasSword = true;
     document.getElementById('sword').style.display = 'none';
     document.getElementById('enemy').style.display = 'block';
+    const enemyPosition = document.querySelector('.darkside')
+    enemyPosition.style.top = "400px"
+    enemyPosition.style.left = '400px'
     return true
-  }
-}
-
-function dropSword () {
-  if (grabSword) {
-    grabSword = false;
-    document.getElementById('sword').style.display = 'block';
-    document.getElementById('sword').style.left = '350px';
-    document.getElementById('sword').style.top = '350px'
   }
 }
 
 function attackAnimation () {
   if (document.getElementById('sword').style.display === 'none' && grabSword) {
     const attackImage = document.querySelector('.linkPic');
-    attackImage.classList.toggle('.attackPic', spaceKeyIsPressed)
-    console.log('hiyaa')
+    if (spaceKeyIsPressed) {
+      attackImage.src = "https://i.imgur.com/zRItFcJ.png";
+    } else {
+      attackImage.src = 'https://i.imgur.com/unqf9A6.png'
+    }
+    // console.log('hiyaa')
+  }
+}
+
+function attackEnemy(top, left, right, bottom) {
+  const charRect = charDiv.getBoundingClientRect()
+  const enemyRect = enemy.getBoundingClientRect()
+  const scrollTop = document.documentElement.scrollLeft
+  const scrollLeft = document.documentElement.scrollTop
+  const charTop = charRect.top + scrollTop;
+  const charLeft = charRect.left + scrollLeft;
+  const enemyTop = enemyRect.top + scrollTop;
+  const enemyLeft = enemyRect.left + scrollLeft;
+
+  const overlapEnemyX = charLeft + left < enemyRect.right && charLeft + charDiv.offsetWidth + right > enemyRect.left;
+  const overlapEnemyY = charTop + top < enemyRect.bottom && charTop + charDiv.offsetHeight + bottom > enemyRect.top;
+
+  if (overlapEnemyX && overlapEnemyY) {
+    console.log('EVIL!!!');
+    enemyHitpoints++;
+
+    if (enemyHitpoints === 1) {
+      enemy.style.display = 'none';
+      const enemyDefeated = document.createElement('div')
+      enemyDefeated.textContent = 'Yo You Did it!!';
+      enemyDefeated.style.fontFamily = 'Press Start 2P'
+      enemyDefeated.style.color = 'goldenrod'
+      enemyDefeated.style.textAlign = 'center'
+      enemyDefeated.style.position = 'absolute'
+      enemyDefeated.style.top = '50px'
+      enemyDefeated.style.left = '880px'
+      document.body.appendChild(enemyDefeated)
+    } 
+  } 
+}
+
+function dropSword() {
+  hasSword = false;
+  sword.style.display = 'block';
+  enemy.style.display = 'none';
+  enemyHitpoints = 0;
+  const enemyDefeated = document.querySelector('.enemy-defeated');
+  if (enemyDefeated) {
+    enemyDefeated.remove();
   }
 }

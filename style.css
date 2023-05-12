@@ -44,7 +44,7 @@ body > header > h1 > span {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 1px solid rgb(115, 189, 210);
+  border: 1px solid;
   width: 850px;
   height: 700px;
 }
@@ -226,8 +226,5 @@ body > header > h1 > span {
   z-index: 4;
 }
 
-.attackPic {
-  background-image: url(https://i.imgur.com/zRItFcJ.png);
-}
 
   
