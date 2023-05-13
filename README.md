@@ -1,6 +1,13 @@
 # THE LEGEND OF YOU 
 
-The Legend of You is a Legend Of Zelda variation that I custom made. Its a short game going through the thought process of taking a leap of faith towards a dream or goal & the importance in knowing what to always keep in mind.
+The Legend of You is a Legend Of Zelda variation that I custom made. Its a short game going through the thought process of taking a leap of faith towards a dream or goal & the importance in knowing what to always keep in mind inspired by Outwitting The Devil by Napoleon Hill.
+
+# Instructions:
+<p>Start The Game</p>
+<p>Walk Through The Cave Door</P>
+<p>Pick up the Sword</p>
+<p>Defeat The Enemy within the time limit</p>
+<p>Wind</p>
 
 # SCREENSHOTS 
 
