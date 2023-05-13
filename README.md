@@ -28,7 +28,7 @@ https://project-1-wireframe--jorgetlopez.repl.co/
 <p>Walk Through The Cave Door</P>
 <p>Pick up the Sword</p>
 <p>Defeat The Enemy within the time limit</p>
-<p>Wind</p>
+<p>Win</p>
 
 # SCREENSHOTS 
 
