@@ -20,7 +20,7 @@ The Legend of You is a Legend Of Zelda variation that I custom made. Its a short
 <P>JAVASCRIPT</P>
 
 # GETTING STARTED
-
+file:///Users/jorgetorreslopez/portfolio-projects/projects/unit-1-project/index.html
 # NEXT STEPS
 <P>ADDING MORE FUNCTIONALITY BETWEEN ENEMY AND CHARACTER<P>
 <P>ADDING BACKGROUND MUSIC<P>
