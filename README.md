@@ -1,6 +1,6 @@
 # THE LEGEND OF YOU 
 
-The Legend of You is a Legend Of Zelda variation that I custom made. Its a short game going through the thought process of taking a leap of faith towards a dream or goal & the importance in knowing what to always keep in mind inspired by Outwitting The Devil by Napoleon Hill. I created this game for someone to play whenever they feel reasonable doubt on their journey. Hopefully it can help them through it.
+The Legend of You is a Legend Of Zelda variation that I custom made. Its a short game going through the thought process of taking a leap of faith towards a dream or goal & the importance in knowing what to always keep in mind inspired by Outwitting The Devil by Napoleon Hill and the fact that the new zelda game is coming out. I created this game for someone to play whenever they feel reasonable doubt on their journey. Hopefully it can help them through it.
 
 # Pseudocode & Wireframe ProtoType
 Game Starts with a button to begin.
