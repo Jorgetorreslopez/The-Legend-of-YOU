@@ -2,6 +2,23 @@
 
 The Legend of You is a Legend Of Zelda variation that I custom made. Its a short game going through the thought process of taking a leap of faith towards a dream or goal & the importance in knowing what to always keep in mind inspired by Outwitting The Devil by Napoleon Hill.
 
+# Pseudocode & Wireframe ProtoType
+<p>Game Starts with a modal appearing with a short message describing choices in life with a button to conintue. The game will ask the player if they have something to fight for with "YES" or "NO" buttons.</p>
+
+"YES" will continue the game. "NO" will direct them to a website I created with a simple message ending the game. If "YES" is clicked another question will pop up asking for a name? Player inserts name and clicks "NEXT" button to move forward.
+
+After continuing, the game will ask if their reason is truly their reason. "YES" or "NO" buttons will appear again except this time both will continue on to the next screen.
+
+The text "STEP 1. MAKE THE DECISION" will appear with 2 button choices below labeled "STAY" and "JUMP". If "STAY" is clicked, it will send the player to the same website from the first screen after "NO" is clicked. If "YES" is clicked another modal will appear with text saying "STEP 2 MAKE IT THE RIGHT DECISION" and a button labeled "I'll remember" which after clicking will start the actual game bringing the player to the first screen of Legend of zelda that shows the in game character sprite they will use.
+
+Their name will display at the top left & a moveset legend to which keys on the keyboard to press will appear on the top right. 
+
+The player will only be able explore around the screen & go inside a cave which will be the way to progress the game to the next screen. After entering the cave a short message saying "Fears & Failures are man-made circumstances. They're never real until accepted by man as permanent. To remember is to fight, to fight is to remember. Your Reason." will appear along with the old man who will give the player a weapon which is metaphorically their reason.
+
+The player will exit the cave by walking down the screen bringing them to the in game first screen. This time 2 monster sprites will appear moving in random directions that the player must defeat to win the game. When a monster is hit, they will be pushed back a couple pixels from the player. Each monster takes 3 hits from the sword. When player takes damage their sword drops at a random point of the screen which they can pick up again to use by walking over it. The words "Pick up your reason" will appear at the bottom of the screen until they retrieve their sword. If they don't pick up their sword within 5 seconds, player dies and a modal will appear saying "THE LONGER YOU DON'T REMEMBER, THE MORE LOST YOU'LL BE" ending the game. The modal will also have a reset button to reset the game. After defeating monsters, a modal with a victory message and a reset button appears ending the game. 
+
+https://project-1-wireframe--jorgetlopez.repl.co/
+
 # Instructions:
 <p>Start The Game</p>
 <p>Walk Through The Cave Door</P>
